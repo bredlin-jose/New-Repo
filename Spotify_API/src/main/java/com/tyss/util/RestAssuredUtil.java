@@ -26,6 +26,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.tyss.baseutil.RestAssuredBaseTest;
 import com.tyss.reports.ExtentManager;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -765,5 +766,22 @@ public class RestAssuredUtil extends RestAssuredBaseTest {
 	public static void addHeader() {
 		requestSpecBuilder.addHeader("Authorization", "Bearer "+ accessToken);
 	}
+	
+	public static void jsonSchemaValidation(Response response,String jsonPath) {
+		try {
+			response.then().assertThat().body(matchesJsonSchemaInClasspath(jsonPath));
+			extentinfo("Json Schema Validation pass ");
+			info("Json Schema Validation pass ");
+		}catch (Exception |AssertionError e) {
+			e.printStackTrace();
+			error(e.getMessage());
+			fail("Json Schema Validation fail");
+			Assert.fail("Json Schema Validation fail");
+		}
+	}
+	
+	
+	
+	
 	
 }

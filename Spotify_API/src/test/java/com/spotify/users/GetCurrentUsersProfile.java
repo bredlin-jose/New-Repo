@@ -19,7 +19,9 @@ public class GetCurrentUsersProfile extends RestAssuredBaseTest{
 		
 		RestAssuredUtil.verify_status_code(response, EndPoints.ok);
 		
-		RestAssuredUtil.verify_response_time(response, EndPoints.max_time);	
+		RestAssuredUtil.verify_response_time(response, EndPoints.max_time);
+		
+		RestAssuredUtil.jsonSchemaValidation(response, "GetCurrentUsersProfileSchemaValidation.json");
 		
 		
 		
